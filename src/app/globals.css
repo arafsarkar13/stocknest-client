@@ -1,37 +1,117 @@
 @import "tailwindcss";
-@plugin "./hero.ts";
+@plugin "./hero.mjs";
 @source "../../node_modules/@heroui/theme/dist/**/*.{js,ts,jsx,tsx}";
 @custom-variant dark (&:is(.dark *));
+
+html {
+  scroll-behavior: smooth;
+}
 
 body {
   min-height: 100vh;
   color: #fff;
-  background:
-    radial-gradient(
-      circle at 20% 20%,
-      rgba(99, 102, 241, 0.45),
-      transparent 40%
-    ),
-    radial-gradient(
-      circle at 80% 30%,
-      rgba(236, 72, 153, 0.35),
-      transparent 40%
-    ),
-    radial-gradient(
-      circle at 50% 90%,
-      rgba(20, 184, 166, 0.35),
-      transparent 45%
-    ),
-    #0b1020;
-  background-attachment: fixed;
+  background: #020107;
+}
+/* ===== starry night background ===== */
+.sky {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+  background: linear-gradient(to bottom, #020107 0%, #201b46 100%);
 }
 
-/* reusable glassmorphism card */
+/* oversized layer that slides exactly one tile, then repeats seamlessly */
+.star-layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: calc(100% + var(--tile));
+  height: calc(100% + var(--tile));
+  background-repeat: repeat;
+  will-change: transform;
+  animation: star-drift linear infinite;
+}
+
+@keyframes star-drift {
+  from {
+    transform: translate(0, 0);
+  }
+  to {
+    transform: translate(calc(var(--tile) * -1), calc(var(--tile) * -1));
+  }
+}
+
+.shooting-star {
+  position: absolute;
+  width: 3px;
+  height: 140px;
+  border-radius: 9999px;
+  background: linear-gradient(
+    to top,
+    rgba(255, 255, 255, 0),
+    rgba(255, 255, 255, 1)
+  );
+  opacity: 0;
+  animation: shooting-star linear infinite;
+}
+
+@keyframes shooting-star {
+  0% {
+    transform: translate(0, 0) rotate(-45deg);
+    opacity: 0;
+  }
+  8% {
+    opacity: 1;
+  }
+  35% {
+    transform: translate(-1400px, -1400px) rotate(-45deg);
+    opacity: 0;
+  }
+  100% {
+    transform: translate(-1400px, -1400px) rotate(-45deg);
+    opacity: 0;
+  }
+}
+
+/* respect users who turn off motion in their system settings */
+@media (prefers-reduced-motion: reduce) {
+  .star-layer,
+  .shooting-star {
+    animation: none;
+  }
+}
+/* animated gradient layer that sits behind the whole app */
+
+/* glassmorphism card */
 .glass {
   background: rgba(255, 255, 255, 0.08);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
   border: 1px solid rgba(255, 255, 255, 0.18);
   border-radius: 1.25rem;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.35);
+}
+
+/* lift effect on hover */
+.glass-hover {
+  transition:
+    transform 0.3s ease,
+    border-color 0.3s ease,
+    background 0.3s ease;
+}
+.glass-hover:hover {
+  transform: translateY(-4px);
+  border-color: rgba(255, 255, 255, 0.35);
+  background: rgba(255, 255, 255, 0.12);
+}
+
+/* slim scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.25);
+  border-radius: 8px;
 }
