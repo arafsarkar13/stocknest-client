@@ -5,16 +5,37 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { Button, Chip } from "@heroui/react";
-import { LayoutDashboard, LogOut, Menu, X, Boxes } from "lucide-react";
+import {
+  LayoutDashboard,
+  LogOut,
+  Menu,
+  X,
+  Boxes,
+  Package,
+  Tags,
+  Truck,
+  CloudDownload,
+} from "lucide-react";
 import { useAuth } from "@/context/AuthContext";
 
-// later steps add more pages here
+const allRoles = ["admin", "manager", "staff"];
+const managers = ["admin", "manager"];
+
 const navItems = [
   {
     label: "Dashboard",
     href: "/dashboard",
     icon: LayoutDashboard,
-    roles: ["admin", "manager", "staff"],
+    roles: allRoles,
+  },
+  { label: "Products", href: "/products", icon: Package, roles: allRoles },
+  { label: "Categories", href: "/categories", icon: Tags, roles: managers },
+  { label: "Suppliers", href: "/suppliers", icon: Truck, roles: managers },
+  {
+    label: "Import Products",
+    href: "/dummy-products",
+    icon: CloudDownload,
+    roles: managers,
   },
 ];
 
