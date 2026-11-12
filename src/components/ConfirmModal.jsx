@@ -17,6 +17,8 @@ export default function ConfirmModal({
   title,
   message,
   loading,
+  confirmLabel = "Delete",
+  confirmColor = "danger",
 }) {
   return (
     <Modal
@@ -34,8 +36,8 @@ export default function ConfirmModal({
           <Button variant="flat" onPress={onClose}>
             Cancel
           </Button>
-          <Button color="danger" onPress={onConfirm} isLoading={loading}>
-            Delete
+          <Button color={confirmColor} onPress={onConfirm} isLoading={loading}>
+            {confirmLabel}
           </Button>
         </ModalFooter>
       </ModalContent>

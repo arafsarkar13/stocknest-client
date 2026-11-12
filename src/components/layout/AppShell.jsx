@@ -15,6 +15,8 @@ import {
   Tags,
   Truck,
   CloudDownload,
+  ClipboardList,
+  History,
 } from "lucide-react";
 import { useAuth } from "@/context/AuthContext";
 
@@ -31,6 +33,18 @@ const navItems = [
   { label: "Products", href: "/products", icon: Package, roles: allRoles },
   { label: "Categories", href: "/categories", icon: Tags, roles: managers },
   { label: "Suppliers", href: "/suppliers", icon: Truck, roles: managers },
+  {
+    label: "Purchase Orders",
+    href: "/purchase-orders",
+    icon: ClipboardList,
+    roles: managers,
+  },
+  {
+    label: "Stock History",
+    href: "/stock-history",
+    icon: History,
+    roles: managers,
+  },
   {
     label: "Import Products",
     href: "/dummy-products",
@@ -59,7 +73,8 @@ function SidebarContent({ onNavigate }) {
         {navItems
           .filter((item) => item.roles.includes(user.role))
           .map((item) => {
-            const active = pathname === item.href;
+            const active =
+              pathname === item.href || pathname.startsWith(`${item.href}/`);
             return (
               <Link
                 key={item.href}
