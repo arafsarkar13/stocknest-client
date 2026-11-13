@@ -7,7 +7,7 @@ import { motion } from "framer-motion";
 import { Input, Button } from "@heroui/react";
 import { useAuth } from "@/context/AuthContext";
 import { getErrorMessage } from "@/lib/api";
-
+import { homeFor } from "@/lib/roles";
 const inputStyle = {
   inputWrapper: "bg-white/5 border-white/25 hover:border-white/50",
 };
@@ -23,7 +23,9 @@ export default function RegisterPage() {
   const [submitting, setSubmitting] = useState(false);
 
   useEffect(() => {
-    if (!loading && user) router.replace("/dashboard");
+    if (!loading && user) {
+      router.replace(homeFor(user.role));
+    }
   }, [loading, user, router]);
 
   const handleSubmit = async (e) => {
