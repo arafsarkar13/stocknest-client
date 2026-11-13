@@ -1,6 +1,11 @@
 import { Chip } from "@heroui/react";
 
-const colors = { pending: "warning", received: "success", cancelled: "danger" };
+const colors = {
+  pending: "warning",
+  received: "success",
+  completed: "success",
+  cancelled: "danger",
+};
 
 export default function StatusChip({ status }) {
   return (
