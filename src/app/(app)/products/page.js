@@ -2,6 +2,8 @@
 
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
+import { downloadFile } from "@/lib/download";
+import { FileSpreadsheet } from "lucide-react";
 import {
   Button,
   Input,
@@ -84,7 +86,18 @@ export default function ProductsPage() {
   const [uploading, setUploading] = useState(false);
   const [deleteTarget, setDeleteTarget] = useState(null);
   const modal = useDisclosure();
+  const [exporting, setExporting] = useState(false);
 
+  const exportExcel = async () => {
+    setExporting(true);
+    try {
+      await downloadFile("/reports/export/products", "stocknest-products.xlsx");
+    } catch (error) {
+      toast.error(error.message || "Export failed");
+    } finally {
+      setExporting(false);
+    }
+  };
   // wait a moment after typing before searching
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -239,13 +252,23 @@ export default function ProductsPage() {
           </p>
         </div>
         {canEdit && (
-          <Button
-            color="primary"
-            startContent={<Plus size={18} />}
-            onPress={openCreate}
-          >
-            Add product
-          </Button>
+          <div className="flex flex-wrap gap-2">
+            <Button
+              variant="flat"
+              startContent={<FileSpreadsheet size={18} />}
+              onPress={exportExcel}
+              isLoading={exporting}
+            >
+              Export Excel
+            </Button>
+            <Button
+              color="primary"
+              startContent={<Plus size={18} />}
+              onPress={openCreate}
+            >
+              Add product
+            </Button>
+          </div>
         )}
       </div>
 

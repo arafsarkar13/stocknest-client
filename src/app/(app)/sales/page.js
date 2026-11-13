@@ -3,6 +3,8 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
+import { downloadFile } from "@/lib/download";
+import { FileSpreadsheet } from "lucide-react";
 import {
   Button,
   Input,
@@ -31,7 +33,18 @@ export default function SalesPage() {
   const [page, setPage] = useState(1);
   const [pages, setPages] = useState(1);
   const [total, setTotal] = useState(0);
+  const [exporting, setExporting] = useState(false);
 
+  const exportExcel = async () => {
+    setExporting(true);
+    try {
+      await downloadFile("/reports/export/sales", "stocknest-sales.xlsx");
+    } catch (error) {
+      toast.error(error.message || "Export failed");
+    } finally {
+      setExporting(false);
+    }
+  };
   useEffect(() => {
     const timer = setTimeout(() => {
       setDebouncedSearch(search);
@@ -74,14 +87,26 @@ export default function SalesPage() {
             {user.role === "staff" && " (your own)"}
           </p>
         </div>
-        <Button
-          as={Link}
-          href="/sales/new"
-          color="primary"
-          startContent={<Plus size={18} />}
-        >
-          New sale
-        </Button>
+        <div className="flex flex-wrap gap-2">
+          {["admin", "manager"].includes(user.role) && (
+            <Button
+              variant="flat"
+              startContent={<FileSpreadsheet size={18} />}
+              onPress={exportExcel}
+              isLoading={exporting}
+            >
+              Export Excel
+            </Button>
+          )}
+          <Button
+            as={Link}
+            href="/sales/new"
+            color="primary"
+            startContent={<Plus size={18} />}
+          >
+            New sale
+          </Button>
+        </div>
       </div>
 
       <div className="glass mt-6 grid grid-cols-1 gap-4 p-4 md:grid-cols-2">
