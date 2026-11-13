@@ -17,6 +17,7 @@ import {
   CloudDownload,
   ClipboardList,
   History,
+  ShoppingCart, // Added
 } from "lucide-react";
 import { useAuth } from "@/context/AuthContext";
 
@@ -31,6 +32,10 @@ const navItems = [
     roles: allRoles,
   },
   { label: "Products", href: "/products", icon: Package, roles: allRoles },
+
+  // New Sales navigation item
+  { label: "Sales", href: "/sales", icon: ShoppingCart, roles: allRoles },
+
   { label: "Categories", href: "/categories", icon: Tags, roles: managers },
   { label: "Suppliers", href: "/suppliers", icon: Truck, roles: managers },
   {
