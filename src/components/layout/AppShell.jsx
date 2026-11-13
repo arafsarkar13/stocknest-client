@@ -17,14 +17,25 @@ import {
   CloudDownload,
   ClipboardList,
   History,
-  ShoppingCart, // Added
+  ShoppingCart,
+  UserCircle,
+  Users,
+  UserCheck,
 } from "lucide-react";
 import { useAuth } from "@/context/AuthContext";
 
 const allRoles = ["admin", "manager", "staff"];
 const managers = ["admin", "manager"];
-
+const admins = ["admin"];
 const navItems = [
+  { label: "My Profile", href: "/profile", icon: UserCircle, roles: allRoles },
+  { label: "Users", href: "/users", icon: Users, roles: admins },
+  {
+    label: "Profile Requests",
+    href: "/profile-requests",
+    icon: UserCheck,
+    roles: admins,
+  },
   {
     label: "Dashboard",
     href: "/dashboard",
