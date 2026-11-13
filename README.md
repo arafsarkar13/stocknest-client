@@ -15,7 +15,7 @@ StockNest is a glass-style inventory and sales web app for **NestMart**, a multi
 | ------- | -------------------- | ----------- |
 | Admin   | admin@nestmart.com   | Admin@123   |
 | Manager | manager@nestmart.com | Manager@123 |
-| Staff   | staff@nestmart.com   | Staff@123   |
+| Staff   | arafsarkar13staff@nest.mart   | 30418araF13   |
 
 ## Key features
 
